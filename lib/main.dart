@@ -124,16 +124,17 @@ OAuth2Helper instantiateHelper(AlpacaClient client) {
 }
 
 Future<http.Response> getCryptoBars(OAuth2Helper oauthHelper) async {
-  String symbol = "BTCUSD";
+  String symbol = "BTCUSD"; // Make this a param later
   String baseURL = "https://data.alpaca.markets/";
   String barsEndpoint = "v1beta1/crypto/$symbol/bars";
-  Future<http.Response> bars = oauthHelper.get("$baseURL$barsEndpoint");
+  http.Response bars = await oauthHelper.get("$baseURL$barsEndpoint");
   return bars;
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   late Future<Album> futureAlbum;
+  late OAuth2Helper oauthHelper;
 
   AlpacaClient client = instantiateClient();
   late Future<http.Response> cryptoBars; // Probably need to make class for bars
@@ -142,11 +143,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     futureAlbum = fetchAlbum();
-    OAuth2Helper oauthHelper = instantiateHelper(client);
+    oauthHelper = instantiateHelper(client);
   }
 
   void _incrementCounter() {
     cryptoBars = getCryptoBars(oauthHelper);
+    print(cryptoBars);
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
