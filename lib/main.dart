@@ -30,14 +30,14 @@ Future<Album> fetchAlbum() async {
 }
 
 // Get these from .env or .json later
-const clientId = "";
-const clientSecret = "";
+const clientId = "4cae962faa56816799ecba13175403e6";
+const clientSecret = "e871b5a874505aa108a23f2a640cdb7b095330df";
 
 class AlpacaClient extends OAuth2Client {
   AlpacaClient({required String redirectUri, required String customUriScheme})
       : super(
             authorizeUrl:
-                'https://app.alpaca.markets/oauth/authorize?response_type=code&client_id=$clientId&redirect_uri=$redirectUri&scope=account:write%20trading%20data', //Your service's authorization url
+                'https://app.alpaca.markets/oauth/authorize', //Your service's authorization url
             tokenUrl:
                 'https://api.alpaca.markets/oauth/token', //Your service access token url
             redirectUri: redirectUri,
@@ -127,7 +127,11 @@ Future<http.Response> getCryptoBars(OAuth2Helper oauthHelper) async {
   String symbol = "BTCUSD"; // Make this a param later
   String baseURL = "https://data.alpaca.markets/";
   String barsEndpoint = "v1beta1/crypto/$symbol/bars";
-  http.Response bars = await oauthHelper.get("$baseURL$barsEndpoint");
+  String queryParams = "?limit=1&timeframe=1Day";
+  http.Response bars =
+      await oauthHelper.get("$baseURL$barsEndpoint$queryParams");
+  print(bars.body);
+  print(bars.statusCode);
   return bars;
 }
 
@@ -135,19 +139,20 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   late Future<Album> futureAlbum;
   late OAuth2Helper oauthHelper;
+  late Future<http.Response> cryptoBars; // Need to make class for bars
 
   AlpacaClient client = instantiateClient();
-  late Future<http.Response> cryptoBars; // Probably need to make class for bars
 
   @override
   void initState() {
     super.initState();
     futureAlbum = fetchAlbum();
     oauthHelper = instantiateHelper(client);
+    cryptoBars = getCryptoBars(oauthHelper);
+    print(cryptoBars);
   }
 
   void _incrementCounter() {
-    cryptoBars = getCryptoBars(oauthHelper);
     print(cryptoBars);
     setState(() {
       // This call to setState tells the Flutter framework that something has
