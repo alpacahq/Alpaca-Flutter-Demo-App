@@ -1,3 +1,5 @@
+// Main with routing
+
 import 'package:flutter/material.dart';
 import 'pages/login.dart';
 import 'pages/dashboard.dart';
@@ -16,7 +18,26 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: const LoginPage(title: "Log in With Alpaca"), theme: _theme());
+    return MaterialApp(onGenerateRoute: _routes(), theme: _theme());
+  }
+
+  RouteFactory _routes() {
+    return (settings) {
+      final args = settings.arguments;
+      final Map<String, dynamic> arguments = args as Map<String, dynamic>;
+      Widget screen;
+      switch (settings.name) {
+        case loginRoute:
+          screen = const LoginPage(title: "Log in with Alpaca");
+          break;
+        case dashboardRoute:
+          screen = const Dashboard();
+          break;
+        default:
+          return null;
+      }
+      return MaterialPageRoute(builder: (BuildContext context) => screen);
+    };
   }
 
   ThemeData _theme() {

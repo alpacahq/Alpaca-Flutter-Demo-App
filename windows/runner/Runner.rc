@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "myapp" "\0"
+            VALUE "CompanyName", "com.crypto_trading_app" "\0"
+            VALUE "FileDescription", "crypto_trading_app" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "myapp" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2022 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "myapp.exe" "\0"
-            VALUE "ProductName", "myapp" "\0"
+            VALUE "InternalName", "crypto_trading_app" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2022 com.crypto_trading_app. All rights reserved." "\0"
+            VALUE "OriginalFilename", "crypto_trading_app.exe" "\0"
+            VALUE "ProductName", "crypto_trading_app" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

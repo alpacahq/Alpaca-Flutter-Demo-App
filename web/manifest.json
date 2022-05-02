@@ -1,6 +1,6 @@
 {
-    "name": "myapp",
-    "short_name": "myapp",
+    "name": "crypto_trading_app",
+    "short_name": "crypto_trading_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

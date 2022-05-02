@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(myapp LANGUAGES CXX)
+project(crypto_trading_app LANGUAGES CXX)
 
-set(BINARY_NAME "myapp")
+set(BINARY_NAME "crypto_trading_app")
 
 cmake_policy(SET CMP0063 NEW)
 
