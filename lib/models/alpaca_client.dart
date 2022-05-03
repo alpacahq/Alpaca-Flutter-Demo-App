@@ -1,7 +1,6 @@
 import 'package:oauth2_client/oauth2_client.dart';
 
 class AlpacaClient extends OAuth2Client {
-  // Get these from .env or .json later
   AlpacaClient({required String redirectUri, required String customUriScheme})
       : super(
             authorizeUrl:

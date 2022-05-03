@@ -1,26 +1,34 @@
+import 'package:crypto_trading_app/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:oauth2_client/oauth2_helper.dart';
 import '../models/alpaca_client.dart';
+import '../models/oauth_container.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key, required this.title}) : super(key: key);
+  LoginPage({Key? key, required this.title}) : super(key: key);
   final String title;
   // Do not hardcode these later
-  final clientId = "4cae962faa56816799ecba13175403e6";
-  final clientSecret = "e871b5a874505aa108a23f2a640cdb7b095330df";
+  final clientId = dotenv.env['OAUTH_CLIENT_ID'] ?? 'CLIENT ID NOT FOUND';
+  final clientSecret =
+      dotenv.env['OAUTH_CLIENT_SECRET'] ?? 'CLIENT SECRET NOT FOUND';
+  final redirectUri =
+      dotenv.env['OAUTH_REDIRECT_URI'] ?? 'REDIRECT URI NOT FOUND';
 
-  void startLogin() {
+  void startLogin(BuildContext context) {
     AlpacaClient client = AlpacaClient(
-        redirectUri: "http://localhost:3000/dashboard",
-        customUriScheme: "http://localhost:3000/");
+        redirectUri: redirectUri,
+        customUriScheme: redirectUri); // Not applicable for web platform
     OAuth2Helper oauthHelper = OAuth2Helper(client,
         grantType: OAuth2Helper.AUTHORIZATION_CODE,
         clientId: clientId,
         clientSecret: clientSecret,
         scopes: ['account:write trading data']);
     print("hello world");
-    var tknResp = oauthHelper.getToken();
-    print(tknResp);
+    var tknResp =
+        oauthHelper.getToken().then((value) => print("hello and $value"));
+    Navigator.pushNamed(context, dashboardRoute,
+        arguments: OauthContainer(client, oauthHelper));
   }
 
   @override
@@ -39,8 +47,14 @@ class LoginPage extends StatelessWidget {
           children: <Widget>[
             ElevatedButton(
                 style: style,
-                onPressed: startLogin,
-                child: const Text('Log in'))
+                onPressed: () {
+                  startLogin(context);
+                },
+                child: const Text('Log in')),
+            // ElevatedButton(
+            //     style: style,
+            //     onPressed: getCryptoBars,
+            //     child: const Text('Log in'))
           ],
         ),
       ),
