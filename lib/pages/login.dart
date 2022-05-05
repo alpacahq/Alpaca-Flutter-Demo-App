@@ -1,4 +1,3 @@
-import 'package:crypto_trading_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:oauth2_client/oauth2_helper.dart';

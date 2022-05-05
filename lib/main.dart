@@ -17,19 +17,24 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   // This widget is the root of your application.
+
+  void listen(Event event) {
+    var data = (event as MessageEvent).data;
+    print(data); // Successfully got the code
+    print(data[0]);
+    print(data[1]);
+    //setState(() {})
+  }
+
   @override
   Widget build(BuildContext context) {
+    window.addEventListener("message", listen, true);
     return MaterialApp(onGenerateRoute: _routes(), theme: _theme());
   }
 
   RouteFactory _routes() {
     return (settings) {
-      // final args = settings.arguments;
-      // final Map<String, dynamic> arguments = args as Map<String, dynamic>;
-      // final Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
       Widget screen;
-      // TODO: Implement a redirect route that will pass the code paramter back
-      // to the parent window: https://pub.dev/packages/oauth2_client#web
       switch (settings.name) {
         case loginRoute:
           screen = LoginPage(title: "Log in with Alpaca");
@@ -38,9 +43,10 @@ class MyApp extends StatelessWidget {
           screen = const Dashboard();
           break;
         default:
+          // TODO:
+            // Grab the code from the URL and send it back to original
+            // Push this window to an auth complete screen, prompt user to close
           print("In default case");
-          // Grab the code from the URL and send it back to original
-          // Push this window to an auth complete window, close
           print(Uri.base.toString());
           print(Uri.base.query);
           print(Uri.base.queryParameters['code']);
