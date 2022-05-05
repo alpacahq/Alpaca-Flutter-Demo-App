@@ -28,7 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   html: ^0.15.0
-  oauth2_client: ^2.3.3
+  oauth2_client: ^2.4.0
   http: ^0.13.4
   url_strategy: ^0.2.0
   flutter_dotenv: ^5.0.2
