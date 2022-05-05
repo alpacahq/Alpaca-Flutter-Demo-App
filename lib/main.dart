@@ -3,6 +3,7 @@ import 'pages/login.dart';
 import 'pages/dashboard.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'dart:html';
 
 const loginRoute = '/';
 const dashboardRoute = '/dashboard';
@@ -37,6 +38,14 @@ class MyApp extends StatelessWidget {
           screen = const Dashboard();
           break;
         default:
+          print("In default case");
+          // Grab the code from the URL and send it back to original
+          // Push this window to an auth complete window, close
+          print(Uri.base.toString());
+          print(Uri.base.query);
+          print(Uri.base.queryParameters['code']);
+          String? code = Uri.base.queryParameters['code'];
+          window.postMessage(code, "http://localhost:3000/");
           return null;
       }
       return MaterialPageRoute(builder: (BuildContext context) => screen);

@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  html: ^0.15.0
   oauth2_client: ^2.3.3
   http: ^0.13.4
   url_strategy: ^0.2.0
