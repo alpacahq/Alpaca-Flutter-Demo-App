@@ -17,7 +17,9 @@ class LoginPage extends StatelessWidget {
 
   late AlpacaClient client = AlpacaClient(
         redirectUri: redirectUri,
-        customUriScheme: redirectUri);
+        customUriScheme: redirectUri,
+        clientId: clientId,
+        clientSecret: clientSecret);
   late OAuth2Helper oauthHelper = OAuth2Helper(client,
         grantType: OAuth2Helper.AUTHORIZATION_CODE,
         clientId: clientId,
@@ -25,19 +27,9 @@ class LoginPage extends StatelessWidget {
         scopes: ['account:write trading data']);
 
   void startLogin(BuildContext context) {
-    // client = AlpacaClient(
-    //     redirectUri: redirectUri,
-    //     customUriScheme: redirectUri); // Not applicable for web platform
-    // oauthHelper = OAuth2Helper(client,
-    //     grantType: OAuth2Helper.AUTHORIZATION_CODE,
-    //     clientId: clientId,
-    //     clientSecret: clientSecret,
-    //     scopes: ['account:write trading data']);
     print("Getting token in Login");
     var tknResp =
         oauthHelper.getToken().then((value) => print("hello and $value"));
-    // Navigator.pushNamed(context, dashboardRoute,
-    //     arguments: OauthContainer(client, oauthHelper));
   }
 
   @override

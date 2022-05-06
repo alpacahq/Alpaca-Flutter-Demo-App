@@ -20,9 +20,8 @@ class MyApp extends StatelessWidget {
 
   void listen(Event event) {
     var data = (event as MessageEvent).data;
-    print(data); // Successfully got the code
-    print(data[0]);
-    print(data[1]);
+    print(
+        "Message event received, data is: $data"); // Successfully got the code
     //setState(() {})
   }
 
@@ -44,14 +43,14 @@ class MyApp extends StatelessWidget {
           break;
         default:
           // TODO:
-            // Grab the code from the URL and send it back to original
-            // Push this window to an auth complete screen, prompt user to close
+          // Grab the code from the URL and send it back to original
+          // Push this window to an auth complete screen, prompt user to close
           print("In default case");
-          print(Uri.base.toString());
-          print(Uri.base.query);
-          print(Uri.base.queryParameters['code']);
           String? code = Uri.base.queryParameters['code'];
-          window.postMessage(code, "http://localhost:3000/");
+          print('Auth code is $code');
+          if (window.opener != null && code != null) {
+            window.opener!.postMessage(window.location.href, "http://localhost:3000");
+          }
           return null;
       }
       return MaterialPageRoute(builder: (BuildContext context) => screen);
