@@ -16,20 +16,25 @@ class LoginPage extends StatelessWidget {
       dotenv.env['OAUTH_REDIRECT_URI'] ?? 'REDIRECT URI NOT FOUND';
 
   late AlpacaClient client = AlpacaClient(
-        redirectUri: redirectUri,
-        customUriScheme: redirectUri,
-        clientId: clientId,
-        clientSecret: clientSecret);
+      redirectUri: redirectUri,
+      customUriScheme: redirectUri,
+      clientId: clientId,
+      clientSecret: clientSecret);
   late OAuth2Helper oauthHelper = OAuth2Helper(client,
-        grantType: OAuth2Helper.AUTHORIZATION_CODE,
-        clientId: clientId,
-        clientSecret: clientSecret,
-        scopes: ['account:write trading data']);
+      grantType: OAuth2Helper.AUTHORIZATION_CODE,
+      clientId: clientId,
+      clientSecret: clientSecret,
+      scopes: ['account:write trading data']);
 
-  void startLogin(BuildContext context) {
+  void startLogin(BuildContext context) async {
     print("Getting token in Login");
-    var tknResp =
-        oauthHelper.getToken().then((value) => print("hello and $value"));
+    var tknResp = await client.getTokenWithAuthCodeFlow(
+        clientId: clientId, scopes: ["account:write trading data"]);
+    print(tknResp.httpStatusCode);
+    print(tknResp.error);
+    print(tknResp.expirationDate);
+    print(tknResp.scope);
+    print(tknResp.toString());
   }
 
   @override
