@@ -24,17 +24,13 @@ class LoginPage extends StatelessWidget {
       grantType: OAuth2Helper.AUTHORIZATION_CODE,
       clientId: clientId,
       clientSecret: clientSecret,
-      scopes: ['account:write trading data']);
+      scopes: ['account:write', 'trading', 'data']);
 
   void startLogin(BuildContext context) async {
     print("Getting token in Login");
-    var tknResp = await client.getTokenWithAuthCodeFlow(
-        clientId: clientId, scopes: ["account:write trading data"]);
-    print(tknResp.httpStatusCode);
-    print(tknResp.error);
-    print(tknResp.expirationDate);
-    print(tknResp.scope);
-    print(tknResp.toString());
+    var tknResp =
+        oauthHelper.getToken().then((value) => print("Login token is: $value"));
+    // Push dashboard onto the screen
   }
 
   @override
