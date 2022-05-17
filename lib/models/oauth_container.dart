@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 import 'alpaca_client.dart';
 import 'package:oauth2_client/oauth2_helper.dart';
 

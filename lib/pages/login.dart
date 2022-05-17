@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:oauth2_client/oauth2_helper.dart';
 import '../models/alpaca_client.dart';
-import '../models/oauth_container.dart';
-import '../utils/get_account.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key, required this.title}) : super(key: key);
   final String title;
-  // Do not hardcode these later
   final clientId = dotenv.env['OAUTH_CLIENT_ID'] ?? 'CLIENT ID NOT FOUND';
   final clientSecret =
       dotenv.env['OAUTH_CLIENT_SECRET'] ?? 'CLIENT SECRET NOT FOUND';
@@ -25,12 +22,11 @@ class LoginPage extends StatelessWidget {
       clientId: clientId,
       clientSecret: clientSecret,
       scopes: ['account:write', 'trading', 'data']);
-
-  void startLogin(BuildContext context) async {
-    print("Getting token in Login");
-    var tknResp =
-        oauthHelper.getToken().then((value) => print("Login token is: $value"));
-    // Push dashboard onto the screen
+      
+  // Gets token and then navigates to the trading dashboard
+  void startLogin(BuildContext context) {
+    oauthHelper.getToken();
+    Navigator.pushNamed(context, "/dashboard");
   }
 
   @override
@@ -53,12 +49,6 @@ class LoginPage extends StatelessWidget {
                   startLogin(context);
                 },
                 child: const Text('Log in')),
-            ElevatedButton(
-                style: style,
-                onPressed: () {
-                  getAccount(oauthHelper);
-                },
-                child: const Text('Display Account Info'))
           ],
         ),
       ),
