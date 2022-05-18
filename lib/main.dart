@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
     var data = (event as MessageEvent).data;
     print(
         "Message event received, data is: $data"); // Successfully got the code
-    //setState(() {})
   }
 
   @override
@@ -42,9 +41,6 @@ class MyApp extends StatelessWidget {
           screen = const Dashboard();
           break;
         default:
-          // TODO:
-          // Grab the code from the URL and send it back to original
-          // Push this window to an auth complete screen, prompt user to close
           print("In default case");
           String? code = Uri.base.queryParameters['code'];
           print('Auth code is $code');
