@@ -3,7 +3,7 @@ import 'package:oauth2_client/oauth2_helper.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void sendOrder(OAuth2Helper oauthHelper, String notional, String symbol,
+void sendAlpacaOrder(OAuth2Helper oauthHelper, String notional, String symbol,
     String side) async {
       
   final String tradeUrl =
@@ -23,9 +23,7 @@ void sendOrder(OAuth2Helper oauthHelper, String notional, String symbol,
 
   http.Response response = await oauthHelper.post(combinedUrl, body: body);
 
-  if (response.statusCode == 200) {
-    // return jsonDecode(response.body);
-  } else {
+  if (response.statusCode != 200) {
     throw Exception('Failed to send order');
   }
 }
