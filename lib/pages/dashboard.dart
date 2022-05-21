@@ -82,20 +82,23 @@ class _DashboardState extends State<Dashboard> {
       appBar: AppBar(
         title: const Text("Alpaca Trading Dashboard"),
       ),
-      body: Form(
-        key: formKey,
-        // autovalidateMode: AutovalidateMode.onUserInteraction,
-        child: ListView(
-          padding: EdgeInsets.all(16),
-          children: [
-            buildSymbol(),
-            const SizedBox(height: 16),
-            buildNotional(),
-            const SizedBox(height: 32),
-            buildSwitch(),
-            const SizedBox(height: 32),
-            buildSubmit(),
-          ],
+      body: Container(
+        child: Form(
+          key: formKey,
+          // autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: ListView(
+            padding: EdgeInsets.all(16),
+            children: [
+              AccountBuilder(account),
+              buildSymbol(),
+              const SizedBox(height: 16),
+              buildNotional(),
+              const SizedBox(height: 32),
+              buildSwitch(),
+              const SizedBox(height: 32),
+              buildSubmit(),
+            ],
+          ),
         ),
       ),
     );
@@ -138,7 +141,7 @@ class _DashboardState extends State<Dashboard> {
 
   // Builds the switch for toggling buy and sell side
   Widget buildSwitch() => Transform.scale(
-        scale: 2,
+        scale: 1,
         child: Switch(
           value: isBuySide,
           onChanged: (isOn) => setState(() {
@@ -154,10 +157,8 @@ class _DashboardState extends State<Dashboard> {
           text: 'Submit $side order',
           onClicked: () {
             final isValid = formKey.currentState!.validate();
-
             if (isValid) {
               formKey.currentState!.save();
-
               final message =
                   'Submitted a $side order for \$$notional of $symbol';
               final snackBar = SnackBar(

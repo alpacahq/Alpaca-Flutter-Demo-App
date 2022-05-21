@@ -3,6 +3,11 @@ import '../models/account.dart';
 
 class AccountBuilder extends StatelessWidget {
   Future<Account>? _account;
+  final TextStyle titleStyle = const TextStyle(
+    decoration: TextDecoration.underline,
+    fontSize: 20,
+  );
+  final TextStyle style = const TextStyle(fontSize: 20);
 
   AccountBuilder(Future<Account>? account) {
     this._account = account;
@@ -14,7 +19,17 @@ class AccountBuilder extends StatelessWidget {
         future: _account,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Text('Current Buying Power: ${snapshot.data!.buyingPower}');
+            return ListView(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                children: [
+                  Text('Account Info as of ${snapshot.data!.date}',
+                      style: titleStyle),
+                  Text('Equity: \$${snapshot.data!.equity}', style: style),
+                  Text('Cash: \$${snapshot.data!.cash}', style: style),
+                  Text('Buying Power: \$${snapshot.data!.buyingPower}',
+                      style: style),
+                ]);
           } else if (snapshot.hasError) {
             return Text('${snapshot.error}');
           }
