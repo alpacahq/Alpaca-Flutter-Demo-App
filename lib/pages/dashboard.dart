@@ -38,26 +38,32 @@ class _DashboardState extends State<Dashboard> {
 
   // For operating on form widget
   final formKey = GlobalKey<FormState>();
+  final TextStyle titleStyle = const TextStyle(
+    decoration: TextDecoration.underline,
+    fontSize: 20,
+  );
+  final ButtonStyle buttonStyle =
+      ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
 
   // Defining Alpaca variables
   late Future<Account> account;
   String symbol = 'BTCUSD';
   String notional = '';
-  String side = 'buy';
+  String side = 'Buy';
   bool isBuySide = true;
 
   // Sends a buy/sell order and updates the displayed account information
   void sendOrder() {
-    sendAlpacaOrder(oauthHelper, notional, symbol, side);
+    sendAlpacaOrder(oauthHelper, notional, symbol, side.toLowerCase());
     getAccount(oauthHelper);
   }
 
   // Allows the user to toggle between sell and buy orders
   void toggleOrderSide() {
     if (isBuySide) {
-      side = 'buy';
+      side = 'Buy';
     } else {
-      side = 'sell';
+      side = 'Sell';
     }
   }
 
@@ -90,10 +96,21 @@ class _DashboardState extends State<Dashboard> {
             padding: EdgeInsets.all(16),
             children: [
               AccountBuilder(account),
+              const SizedBox(height: 16),
+              ButtonWidget(
+                  text: 'Refresh Account Info',
+                  onClicked: () => getAccount(oauthHelper)),
+              const SizedBox(height: 64),
+              Text("Place an order", style: titleStyle),
+              const SizedBox(height: 4),
               buildSymbol(),
               const SizedBox(height: 16),
               buildNotional(),
               const SizedBox(height: 32),
+              const Text(
+                "Toggle buy/sell",
+                textAlign: TextAlign.center,
+              ),
               buildSwitch(),
               const SizedBox(height: 32),
               buildSubmit(),
@@ -154,13 +171,13 @@ class _DashboardState extends State<Dashboard> {
   // Builds the submit order button
   Widget buildSubmit() => Builder(
         builder: (context) => ButtonWidget(
-          text: 'Submit $side order',
+          text: 'Submit $side Order',
           onClicked: () {
             final isValid = formKey.currentState!.validate();
             if (isValid) {
               formKey.currentState!.save();
               final message =
-                  'Submitted a $side order for \$$notional of $symbol';
+                  'Submitted a ${side.toLowerCase()} order for \$$notional of ${symbol.toUpperCase()}';
               final snackBar = SnackBar(
                 content: Text(
                   message,
