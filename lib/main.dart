@@ -16,17 +16,9 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-  // This widget is the root of your application.
-
-  void listen(Event event) {
-    var data = (event as MessageEvent).data;
-    print(
-        "Message event received, data is: $data"); // Successfully got the code
-  }
 
   @override
   Widget build(BuildContext context) {
-    window.addEventListener("message", listen, true);
     return MaterialApp(onGenerateRoute: _routes(), theme: _theme());
   }
 
@@ -41,9 +33,7 @@ class MyApp extends StatelessWidget {
           screen = const Dashboard();
           break;
         default:
-          print("In default case");
           String? code = Uri.base.queryParameters['code'];
-          print('Auth code is $code');
           if (window.opener != null && code != null) {
             window.opener!.postMessage(window.location.href, "http://localhost:3000");
           }

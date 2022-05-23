@@ -10,7 +10,7 @@ class AccountBuilder extends StatelessWidget {
   final TextStyle style = const TextStyle(fontSize: 20);
 
   AccountBuilder(Future<Account>? account) {
-    this._account = account;
+    _account = account;
   }
 
   @override

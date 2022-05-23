@@ -54,11 +54,11 @@ class _DashboardState extends State<Dashboard> {
 
   // Sends a buy/sell order and updates the displayed account information
   void sendOrder() {
-    sendAlpacaOrder(oauthHelper, notional, symbol, side.toLowerCase());
+    sendAlpacaOrder(oauthHelper, notional, symbol.toUpperCase(), side.toLowerCase());
     getAccount(oauthHelper);
   }
 
-  // Allows the user to toggle between sell and buy orders
+  // Toggles between sell and buy orders
   void toggleOrderSide() {
     if (isBuySide) {
       side = 'Buy';
@@ -75,7 +75,7 @@ class _DashboardState extends State<Dashboard> {
     });
   }
 
-  // Display initial account data
+  // On initialization get the current state of the account
   @override
   void initState() {
     super.initState();
@@ -88,12 +88,11 @@ class _DashboardState extends State<Dashboard> {
       appBar: AppBar(
         title: const Text("Alpaca Trading Dashboard"),
       ),
-      body: Container(
-        child: Form(
+      body: Form(
           key: formKey,
           // autovalidateMode: AutovalidateMode.onUserInteraction,
           child: ListView(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             children: [
               AccountBuilder(account),
               const SizedBox(height: 16),
@@ -101,14 +100,14 @@ class _DashboardState extends State<Dashboard> {
                   text: 'Refresh Account Info',
                   onClicked: () => getAccount(oauthHelper)),
               const SizedBox(height: 64),
-              Text("Place an order", style: titleStyle),
+              Text("Place an Order", style: titleStyle),
               const SizedBox(height: 4),
               buildSymbol(),
               const SizedBox(height: 16),
               buildNotional(),
               const SizedBox(height: 32),
               const Text(
-                "Toggle buy/sell",
+                "Toggle Buy/Sell Side",
                 textAlign: TextAlign.center,
               ),
               buildSwitch(),
@@ -116,12 +115,11 @@ class _DashboardState extends State<Dashboard> {
               buildSubmit(),
             ],
           ),
-        ),
       ),
     );
   }
 
-  // Builds the text form field for symbol and does basic validation
+  // Builds the text form field for symbol input
   Widget buildSymbol() => TextFormField(
         decoration: const InputDecoration(
           labelText: 'Symbol',
@@ -137,7 +135,7 @@ class _DashboardState extends State<Dashboard> {
         onSaved: (value) => setState(() => symbol = value!),
       );
 
-  // Builds the text field for notional value
+  // Builds the text field for notional value input
   Widget buildNotional() => TextFormField(
         keyboardType: TextInputType.number,
         decoration: const InputDecoration(

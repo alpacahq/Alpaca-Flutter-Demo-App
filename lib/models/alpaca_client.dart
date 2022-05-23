@@ -1,13 +1,4 @@
 import 'package:oauth2_client/oauth2_client.dart';
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
-import 'package:oauth2_client/access_token_response.dart';
-import 'package:oauth2_client/authorization_response.dart';
-import 'package:oauth2_client/oauth2_response.dart';
-import 'package:oauth2_client/src/oauth2_utils.dart';
-
-import 'package:random_string/random_string.dart';
 
 class AlpacaClient extends OAuth2Client {
   String clientId;
@@ -19,11 +10,13 @@ class AlpacaClient extends OAuth2Client {
       required this.clientSecret})
       : super(
             authorizeUrl:
-                'https://app.alpaca.markets/oauth/authorize', //Your service's authorization url
+                'https://app.alpaca.markets/oauth/authorize',
             tokenUrl:
-                'https://api.alpaca.markets/oauth/token', //Your service access token url
+                'https://api.alpaca.markets/oauth/token',
             redirectUri: redirectUri,
             customUriScheme: customUriScheme);
+            
+  // Override the base class to add extra fields to the request parameters
   @override
   Map<String, dynamic> getTokenUrlParams(
       {required String code,
@@ -33,7 +26,6 @@ class AlpacaClient extends OAuth2Client {
     var foo = super.getTokenUrlParams(
         code: code,
         redirectUri: redirectUri,
-        // codeVerifier: codeVerifier,
         customParams: customParams);
     foo['client_id'] = clientId;
     foo['client_secret'] = clientSecret;
