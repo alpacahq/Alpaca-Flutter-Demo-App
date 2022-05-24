@@ -34,7 +34,10 @@ class AccountBuilder extends StatelessWidget {
             return Text('${snapshot.error}');
           }
 
-          return const CircularProgressIndicator();
+          // Center and size the circular indicator upon rendering
+          return (const Center(
+              child: SizedBox(
+                  width: 30, height: 30, child: CircularProgressIndicator())));
         });
   }
 }

@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
           break;
         default:
           String? code = Uri.base.queryParameters['code'];
+          // This code tells the pop-up auth window to send the code to parent
           if (window.opener != null && code != null) {
             window.opener!.postMessage(window.location.href, "http://localhost:3000");
           }

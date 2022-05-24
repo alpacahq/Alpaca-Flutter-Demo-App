@@ -54,7 +54,8 @@ class _DashboardState extends State<Dashboard> {
 
   // Sends a buy/sell order and updates the displayed account information
   void sendOrder() {
-    sendAlpacaOrder(oauthHelper, notional, symbol.toUpperCase(), side.toLowerCase());
+    sendAlpacaOrder(
+        oauthHelper, notional, symbol.toUpperCase(), side.toLowerCase());
     getAccount(oauthHelper);
   }
 
@@ -75,7 +76,7 @@ class _DashboardState extends State<Dashboard> {
     });
   }
 
-  // On initialization get the current state of the account
+  // On initialization, get the current state of the account
   @override
   void initState() {
     super.initState();
@@ -89,32 +90,31 @@ class _DashboardState extends State<Dashboard> {
         title: const Text("Alpaca Trading Dashboard"),
       ),
       body: Form(
-          key: formKey,
-          // autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
-              AccountBuilder(account),
-              const SizedBox(height: 16),
-              ButtonWidget(
-                  text: 'Refresh Account Info',
-                  onClicked: () => getAccount(oauthHelper)),
-              const SizedBox(height: 64),
-              Text("Place an Order", style: titleStyle),
-              const SizedBox(height: 4),
-              buildSymbol(),
-              const SizedBox(height: 16),
-              buildNotional(),
-              const SizedBox(height: 32),
-              const Text(
-                "Toggle Buy/Sell Side",
-                textAlign: TextAlign.center,
-              ),
-              buildSwitch(),
-              const SizedBox(height: 32),
-              buildSubmit(),
-            ],
-          ),
+        key: formKey,
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            AccountBuilder(account),
+            const SizedBox(height: 16),
+            ButtonWidget(
+                text: 'Refresh Account Info',
+                onClicked: () => getAccount(oauthHelper)),
+            const SizedBox(height: 64),
+            Text("Place an Order", style: titleStyle),
+            const SizedBox(height: 4),
+            buildSymbol(),
+            const SizedBox(height: 16),
+            buildNotional(),
+            const SizedBox(height: 32),
+            const Text(
+              "Toggle Buy/Sell Side",
+              textAlign: TextAlign.center,
+            ),
+            buildSwitch(),
+            const SizedBox(height: 32),
+            buildSubmit(),
+          ],
+        ),
       ),
     );
   }
@@ -155,15 +155,12 @@ class _DashboardState extends State<Dashboard> {
       );
 
   // Builds the switch for toggling buy and sell side
-  Widget buildSwitch() => Transform.scale(
-        scale: 1,
-        child: Switch(
-          value: isBuySide,
-          onChanged: (isOn) => setState(() {
-            isBuySide = isOn;
-            toggleOrderSide();
-          }),
-        ),
+  Widget buildSwitch() => Switch(
+        value: isBuySide,
+        onChanged: (switchVal) => setState(() {
+          isBuySide = switchVal;
+          toggleOrderSide();
+        }),
       );
 
   // Builds the submit order button
