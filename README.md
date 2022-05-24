@@ -1,16 +1,12 @@
-# crypto_trading_app
+# Alpaca OAuth Crypto Trading App with Flutter
 
-A new Flutter project.
+A boilerplate flutter project that enables users to trade stocks and crypto using [Alpaca's API](https://alpaca.markets/docs/api-references/).
 
-## Getting Started
+Features the ability to make trades at market price, refresh current account
+information, and authentication through OAuth2.
 
-This project is a starting point for a Flutter application.
+![login](images/login.png)
 
-A few resources to get you started if this is your first Flutter project:
+![dashboard](images/dashboard.png)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![trade](images/trade.png)
